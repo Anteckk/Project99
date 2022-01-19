@@ -5,23 +5,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed;
-    private float rotationSpeed;
+    [SerializeField] float speed = 10;
+    [SerializeField] float rotationSpeed = 10;
+    [SerializeField] new Camera camera;
     private Rigidbody rb;
-    [SerializeField] Camera camera;
-    private Vector2 XZAxis;
+    private Vector2 XZAxis = Vector2.zero;
 
     void Start()
     {
-        speed = 10;
-        rotationSpeed = 10;
         rb = GetComponent<Rigidbody>();
     }
     
     // Update is called once per frame
     void FixedUpdate()
     {
-        var transformCam = camera.transform;
+        Transform transformCam = camera.transform;
         Vector3 movement = transformCam.right * XZAxis.x + transformCam.forward * XZAxis.y;
 
         Vector3 direction = new Vector3(movement.x, 0f, movement.z);
@@ -33,7 +31,6 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed);
         }
     }
-
     
     void OnMovement(InputValue prmInputValue)
     {
