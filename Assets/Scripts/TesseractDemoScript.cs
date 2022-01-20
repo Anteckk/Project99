@@ -46,10 +46,7 @@ public class TesseractDemoScript : MonoBehaviour
 
         _text += (string.IsNullOrWhiteSpace(displayText.text) ? "" : "\n") + text;
 
-        if (isError)
-            Debug.LogError(text);
-        else
-            Debug.Log(text);
+        Debug.Log(text);
     }
 
     private void LateUpdate()
@@ -63,5 +60,13 @@ public class TesseractDemoScript : MonoBehaviour
         rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
             rectTransform.rect.width * _tesseractDriver.GetHighlightedTexture().height / _tesseractDriver.GetHighlightedTexture().width);
         outputImage.texture = _tesseractDriver.GetHighlightedTexture();
+    }
+
+    public void Recognize()
+    {
+        Texture2D texture = new Texture2D(imageToRecognize.width, imageToRecognize.height, TextureFormat.ARGB32, false);
+        texture.SetPixels32(imageToRecognize.GetPixels32());
+        texture.Apply();
+        Recognize(texture);
     }
 }
